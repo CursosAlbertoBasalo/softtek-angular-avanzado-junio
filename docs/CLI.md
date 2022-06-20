@@ -8,9 +8,9 @@
 # Install the CLI
 npm i -g @angular/cli
 # and create a new project with minimal boilerplate
-ng new softtek-angular-avanzado-abril --inline-style --prefix stk --routing true --skip-tests --style css
+ng new softtek-angular-avanzado-junio --inline-style --prefix stk --routing true --skip-tests --style css
 # ... or execute from the internet
-npx ng new softtek-angular-avanzado-abril --inline-style --prefix stk --routing true --skip-tests --style css
+npx ng new softtek-angular-avanzado-junio --inline-style --prefix stk --routing true --skip-tests --style css
 
 # Add prettier and eslint to the project
 ng add @angular-eslint/schematics

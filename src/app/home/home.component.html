@@ -7,6 +7,7 @@
     <stk-refresh (refresh)="loadAgencies()"></stk-refresh>
   </footer>
 </article>
+
 <article *ngIf="trips$ | async as trips">
   <header>There are {{trips.length}} trips</header>
   <main>
