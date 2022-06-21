@@ -1,17 +1,25 @@
 import { Injectable } from '@angular/core';
-import { Agency } from '@stk/models/agency.interface';
 import { Trip } from '@stk/models/trip.interface';
 import { AgenciesService } from '@stk/services/agencies.service';
 import { TripsService } from '@stk/services/trips.service';
-import { delay, Observable, of } from 'rxjs';
+import { catchError, delay, map, Observable, of, pipe } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HomeService {
+  public errorPipe = pipe(
+    map((datos) => {
+      return { datos: datos, error: null };
+    }),
+    catchError((error) => {
+      return of({ datos: null, error: { dataName: 'algo', errorMessage: error.message } });
+    })
+  );
+
   constructor(private agencies: AgenciesService, private trips: TripsService) {}
-  getAgencies$(): Observable<Agency[]> {
-    return this.agencies.getAll$().pipe(delay(1500));
+  getAgencies$(): Observable<any> {
+    return this.agencies.getAll$().pipe(delay(1500)).pipe(this.errorPipe);
     // return this.getEmpty$();
     // return this.getError$();
   }
@@ -25,6 +33,6 @@ export class HomeService {
     return of([]).pipe(delay(1000));
   }
   private getError$(): Observable<any> {
-    return this.agencies.getError$();
+    return this.agencies.getError$().pipe(this.errorPipe);
   }
 }

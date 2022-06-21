@@ -1,15 +1,44 @@
-<article *ngIf="agencies"
-         #agenciesArticle>
-  <header>There are {{agencies.length}} agencies</header>
+<article *ngIf="agencies$ | async as response">
+  <ng-container *ngTemplateOutlet="
+                response.datos then data; else error; context: { list:'Agencies', response:response }
+                ">
+  </ng-container>
+  <stk-refresh (refresh)="loadAgencies()"></stk-refresh>
+</article>
+<article *ngIf="trips$ | async as response">
+  <ng-container *ngTemplateOutlet="
+                response.datos then data; else error; context: { list:'Trips', response:response }
+                ">
+  </ng-container>
+  <stk-refresh (refresh)="loadTrips()"></stk-refresh>
+</article>
+
+
+
+
+
+
+<ng-template #data
+             let-response>
+  <header>There are {{ response.datos.length}} {{response.list}}</header>
   <main>
-    <stk-preview [data]="agencies"></stk-preview>
+    <stk-preview [data]="response.datos"></stk-preview>
   </main>
   <footer>
     <stk-refresh (refresh)="loadAgencies()"></stk-refresh>
   </footer>
-</article>
+</ng-template>
+<ng-template #error
+             let-response>
+  <stk-error [dataName]="response.list"
+             [error]="response.error.errorMessage"></stk-error>
+</ng-template>
 
-<article *ngIf="trips$ | async as trips">
+
+
+
+
+<!-- <article *ngIf="trips$ | async as trips">
   <header>There are {{trips.length}} trips</header>
   <main>
     <stk-preview [data]="trips"></stk-preview>
@@ -17,4 +46,4 @@
   <footer>
     <stk-refresh (refresh)="loadTrips()"></stk-refresh>
   </footer>
-</article>
+</article> -->
