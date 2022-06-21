@@ -1,4 +1,4 @@
-<article *ngIf="agencies$ | async as agencies">
+<article *ngIf="agencies">
   <header>There are {{agencies.length}} agencies</header>
   <main>
     <stk-preview [data]="agencies"></stk-preview>
@@ -11,7 +11,8 @@
 <article *ngIf="trips$ | async as trips">
   <header>There are {{trips.length}} trips</header>
   <main>
-    <stk-preview [data]="trips"></stk-preview>
+    <stk-preview [data
+                 ]="trips"></stk-preview>
   </main>
   <footer>
     <stk-refresh (refresh)="loadTrips()"></stk-refresh>
