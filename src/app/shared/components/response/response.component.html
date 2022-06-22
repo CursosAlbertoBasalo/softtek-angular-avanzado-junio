@@ -2,10 +2,13 @@
   <ng-container *ngIf="response.data; else error">
     <header>There are {{ response.data.length }} {{name}}</header>
     <main>
-
       <ng-container [ngTemplateOutlet]="dataTemplate || defaultPreview"
                     [ngTemplateOutletContext]="{ $implicit: response.data }">
       </ng-container>
+
+      <!-- <ng-container
+                    *ngTemplateOutlet="dataTemplate then dataTemplate ; else defaultPreview; context : {$implicit: response.data}">
+      </ng-container> -->
 
       <ng-template #defaultPreview>
         <stk-preview [data]="response.data"></stk-preview>
