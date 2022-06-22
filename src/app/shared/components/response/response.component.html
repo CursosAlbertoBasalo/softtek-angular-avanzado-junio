@@ -1,11 +1,10 @@
 <article *ngIf="response$ | async as response; else loading">
   <ng-container *ngIf="response.data; else error">
     <header>There are {{ response.data.length }} {{name}}</header>
-    <main>
+    <main *ngIf="response.data.length; else empty">
       <ng-container [ngTemplateOutlet]="dataTemplate || defaultPreview"
                     [ngTemplateOutletContext]="{ $implicit: response.data }">
       </ng-container>
-
       <!-- <ng-container
                     *ngTemplateOutlet="dataTemplate then dataTemplate ; else defaultPreview; context : {$implicit: response.data}">
       </ng-container> -->
@@ -13,7 +12,6 @@
       <ng-template #defaultPreview>
         <stk-preview [data]="response.data"></stk-preview>
       </ng-template>
-
     </main>
     <footer>
       <stk-refresh (refresh)="reload.emit()"></stk-refresh>
@@ -26,4 +24,7 @@
 </article>
 <ng-template #loading>
   <stk-loading [dataName]="name"></stk-loading>
+</ng-template>
+<ng-template #empty>
+  <stk-empty [dataName]="name"></stk-empty>
 </ng-template>

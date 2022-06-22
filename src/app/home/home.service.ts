@@ -13,8 +13,8 @@ export class HomeService {
   constructor(private agencies: AgenciesService, private trips: TripsService) {}
 
   public getAgencies$(): Observable<Response<Agency[]>> {
-    return this.agencies.getAll$().pipe(delay(1500));
-    // return this.agencies.getEmpty$();
+    // return this.agencies.getAll$().pipe(delay(1500));
+    return this.agencies.getEmpty$();
     // return this.agencies.getError$();
   }
   public getTrips$(): Observable<Response<Trip[]>> {
