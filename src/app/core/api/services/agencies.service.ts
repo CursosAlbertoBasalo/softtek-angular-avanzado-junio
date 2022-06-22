@@ -11,10 +11,10 @@ import { environment } from 'src/environments/environment';
 export class AgenciesService {
   public responsePipe = pipe(
     map((body: Agency[]) => {
-      return { name: 'Agencies', data: body, error: null };
+      return { data: body, error: null };
     }),
     catchError((error) => {
-      return of({ name: 'Agencies', data: null, error: error.message });
+      return of({ data: null, error: error.message });
     })
   );
 

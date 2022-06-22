@@ -1,32 +1,9 @@
-<article *ngIf="agencies$ | async as response; else loadingAgencies">
+<stk-response [response$]="agencies$"
+              name="Agencies"
+              (reload)="loadAgencies()">
+</stk-response>
 
-  <ng-container *ngIf="response.data; else error">
-    <header>There are {{ response.data.length }} {{response.name}}</header>
-    <main>
-      <stk-preview [data]="response.data"></stk-preview>
-    </main>
-    <footer>
-      <stk-refresh (refresh)="loadAgencies()"></stk-refresh>
-    </footer>
-  </ng-container>
-
-  <ng-template #error>
-    <stk-error [dataName]="response.name"
-               [error]="response.error || ''"></stk-error>
-  </ng-template>
-
-</article>
-
-<ng-template #loadingAgencies>
-  <stk-loading dataName="Agencies"></stk-loading>
-</ng-template>
-
-<article *ngIf="trips$ | async as response">
-  <header>There are {{response.data?.length}} {{response.name}}</header>
-  <main>
-    <stk-preview [data]="response"></stk-preview>
-  </main>
-  <footer>
-    <stk-refresh (refresh)="loadTrips()"></stk-refresh>
-  </footer>
-</article>
+<stk-response [response$]="trips$"
+              name="Trips"
+              (reload)="loadTrips()">
+</stk-response>

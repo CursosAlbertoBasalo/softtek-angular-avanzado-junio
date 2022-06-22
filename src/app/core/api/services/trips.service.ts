@@ -11,10 +11,10 @@ import { environment } from 'src/environments/environment';
 export class TripsService {
   public responsePipe = pipe(
     map((body: Trip[]) => {
-      return { name: 'Trips', data: body, error: null };
+      return { data: body, error: null };
     }),
     catchError((error) => {
-      return of({ name: 'Trips', data: null, error: error.message });
+      return of({ data: null, error: error.message });
     })
   );
 

@@ -1,0 +1,18 @@
+<article *ngIf="response$ | async as response; else loading">
+  <ng-container *ngIf="response.data; else error">
+    <header>There are {{ response.data.length }} {{name}}</header>
+    <main>
+      <stk-preview [data]="response.data"></stk-preview>
+    </main>
+    <footer>
+      <stk-refresh (refresh)="reload.emit()"></stk-refresh>
+    </footer>
+  </ng-container>
+  <ng-template #error>
+    <stk-error [dataName]="name"
+               [error]="response.error || ''"></stk-error>
+  </ng-template>
+</article>
+<ng-template #loading>
+  <stk-loading [dataName]="name"></stk-loading>
+</ng-template>
