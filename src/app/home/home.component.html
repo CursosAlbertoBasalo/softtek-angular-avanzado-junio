@@ -1,9 +1,32 @@
 <stk-response [response$]="agencies$"
               name="Agencies"
+              [dataTemplate]="agenciesTemplate"
               (reload)="loadAgencies()">
 </stk-response>
+<ng-template #agenciesTemplate
+             let-agencies>
+  <ul>
+    <li *ngFor="let agency of agencies">
+      {{ agency.name }} - {{ agency.range }} - {{ agency.status }}
+    </li>
+  </ul>
+</ng-template>
 
 <stk-response [response$]="trips$"
               name="Trips"
+              [dataTemplate]="tripsTemplate"
               (reload)="loadTrips()">
 </stk-response>
+<ng-template #tripsTemplate
+             let-trips>
+  <table>
+    <thead>
+      <th>Destino</th>
+      <th>Plazas</th>
+    </thead>
+    <tr *ngFor="let trip of trips">
+      <td>{{ trip.destination }}</td>
+      <td>{{ trip.places }}</td>
+    </tr>
+  </table>
+</ng-template>
