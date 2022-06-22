@@ -1,30 +1,32 @@
-<article *ngIf="agencies$ | async as response">
-  <ng-container *ngTemplateOutlet="
-                response.datos then data; else error; context: { list:'Agencies', response:response }
-                ">
+<article *ngIf="agencies$ | async as response; else loadingAgencies">
+
+  <ng-container *ngIf="response.data; else error">
+    <header>There are {{ response.data.length }} {{response.name}}</header>
+    <main>
+      <stk-preview [data]="response.data"></stk-preview>
+    </main>
+    <footer>
+      <stk-refresh (refresh)="loadAgencies()"></stk-refresh>
+    </footer>
   </ng-container>
-  <stk-refresh (refresh)="loadAgencies()"></stk-refresh>
-</article>
-<article *ngIf="trips$ | async as response">
-  <ng-container *ngTemplateOutlet="
-                response.datos then data; else error; context: { list:'Trips', response:response }
-                ">
-  </ng-container>
-  <stk-refresh (refresh)="loadTrips()"></stk-refresh>
+
+  <ng-template #error>
+    <stk-error [dataName]="response.name"
+               [error]="response.error || ''"></stk-error>
+  </ng-template>
+
 </article>
 
-<ng-template #data
-             let-response>
-  <header>There are {{ response.datos.length}} {{response.list}}</header>
+<ng-template #loadingAgencies>
+  <stk-loading dataName="Agencies"></stk-loading>
+</ng-template>
+
+<article *ngIf="trips$ | async as response">
+  <header>There are {{response.data?.length}} {{response.name}}</header>
   <main>
-    <stk-preview [data]="response.datos"></stk-preview>
+    <stk-preview [data]="response"></stk-preview>
   </main>
   <footer>
-    <stk-refresh (refresh)="loadAgencies()"></stk-refresh>
+    <stk-refresh (refresh)="loadTrips()"></stk-refresh>
   </footer>
-</ng-template>
-<ng-template #error
-             let-response>
-  <stk-error [dataName]="response.list"
-             [error]="response.error.errorMessage"></stk-error>
-</ng-template>
+</article>

@@ -1,4 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Agency } from '@stk/models/agency.interface';
+import { Response } from '@stk/models/response.interface';
+import { Trip } from '@stk/models/trip.interface';
 import { Observable } from 'rxjs';
 import { HomeService } from './home.service';
 
@@ -9,8 +12,8 @@ import { HomeService } from './home.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
-  public agencies$: Observable<any>;
-  public trips$: Observable<any>;
+  public agencies$: Observable<Response<Agency[]>>;
+  public trips$: Observable<Response<Trip[]>>;
 
   constructor(private service: HomeService) {
     this.agencies$ = this.service.getAgencies$();
