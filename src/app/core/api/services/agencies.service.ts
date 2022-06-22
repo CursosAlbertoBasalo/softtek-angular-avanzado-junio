@@ -1,26 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Agency } from '@stk/models/agency.interface';
+import { ResponseBase } from '@stk/models/response.base';
 import { Response } from '@stk/models/response.interface';
-import { catchError, map, Observable, of, pipe } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AgenciesService {
-  public responsePipe = pipe(
-    map((body: Agency[]) => {
-      return { data: body, error: null };
-    }),
-    catchError((error) => {
-      return of({ data: null, error: error.message });
-    })
-  );
-
+export class AgenciesService extends ResponseBase<Agency[]> {
   private readonly apiUrl = environment.apiUrl + '/agencies';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    super();
+  }
 
   getAll$(): Observable<Response<Agency[]>> {
     console.log('getAll$', this.apiUrl);
