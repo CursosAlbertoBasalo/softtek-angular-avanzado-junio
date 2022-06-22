@@ -13,11 +13,6 @@
   <stk-refresh (refresh)="loadTrips()"></stk-refresh>
 </article>
 
-
-
-
-
-
 <ng-template #data
              let-response>
   <header>There are {{ response.datos.length}} {{response.list}}</header>
@@ -33,17 +28,3 @@
   <stk-error [dataName]="response.list"
              [error]="response.error.errorMessage"></stk-error>
 </ng-template>
-
-
-
-
-
-<!-- <article *ngIf="trips$ | async as trips">
-  <header>There are {{trips.length}} trips</header>
-  <main>
-    <stk-preview [data]="trips"></stk-preview>
-  </main>
-  <footer>
-    <stk-refresh (refresh)="loadTrips()"></stk-refresh>
-  </footer>
-</article> -->
