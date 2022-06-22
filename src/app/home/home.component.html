@@ -4,9 +4,9 @@
               (reload)="loadAgencies()">
 </stk-response>
 <ng-template #agenciesTemplate
-             let-agencies>
+             let-context>
   <ul>
-    <li *ngFor="let agency of agencies">
+    <li *ngFor="let agency of context">
       {{ agency.name }} - {{ agency.range }} - {{ agency.status }}
     </li>
   </ul>
@@ -18,13 +18,13 @@
               (reload)="loadTrips()">
 </stk-response>
 <ng-template #tripsTemplate
-             let-trips>
+             let-context>
   <table>
     <thead>
       <th>Destino</th>
       <th>Plazas</th>
     </thead>
-    <tr *ngFor="let trip of trips">
+    <tr *ngFor="let trip of context">
       <td>{{ trip.destination }}</td>
       <td>{{ trip.places }}</td>
     </tr>
