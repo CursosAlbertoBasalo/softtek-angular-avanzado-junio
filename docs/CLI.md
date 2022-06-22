@@ -58,4 +58,8 @@ ng g c shared/components/refresh --export true
 # Create Home module for home page
 ng g m home --module app.module.ts --route 'home'
 ng g s home/home
+
+
+# Create interface
+ng g interface core/api/models/response --type=interface
 ```

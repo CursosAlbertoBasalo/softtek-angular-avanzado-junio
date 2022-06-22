@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Response } from '@stk/models/response.interface';
 import { Trip } from '@stk/models/trip.interface';
 import { catchError, map, Observable, of, pipe } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -9,7 +10,7 @@ import { environment } from 'src/environments/environment';
 })
 export class TripsService {
   public responsePipe = pipe(
-    map((body) => {
+    map((body: Trip[]) => {
       return { name: 'Trips', data: body, error: null };
     }),
     catchError((error) => {
@@ -21,7 +22,7 @@ export class TripsService {
 
   constructor(private http: HttpClient) {}
 
-  getAll$(): Observable<any> {
+  getAll$(): Observable<Response<Trip[]>> {
     console.log('getAll$', this.apiUrl);
     return this.http.get<Trip[]>(this.apiUrl).pipe(this.responsePipe);
   }

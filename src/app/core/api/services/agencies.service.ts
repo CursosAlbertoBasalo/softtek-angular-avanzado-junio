@@ -1,15 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Agency } from '@stk/models/agency.interface';
+import { Response } from '@stk/models/response.interface';
 import { catchError, map, Observable, of, pipe } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Agency } from '../models/agency.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AgenciesService {
   public responsePipe = pipe(
-    map((body) => {
+    map((body: Agency[]) => {
       return { name: 'Agencies', data: body, error: null };
     }),
     catchError((error) => {
@@ -21,7 +22,7 @@ export class AgenciesService {
 
   constructor(private http: HttpClient) {}
 
-  getAll$(): Observable<any> {
+  getAll$(): Observable<Response<Agency[]>> {
     console.log('getAll$', this.apiUrl);
     return this.http.get<Agency[]>(this.apiUrl).pipe(this.responsePipe);
   }
