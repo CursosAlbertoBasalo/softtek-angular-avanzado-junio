@@ -19,7 +19,7 @@ export class HomeService {
   }
   public getTrips$(): Observable<Response<Trip[]>> {
     return this.trips.getAll$().pipe(delay(500));
-    // return this.agencies.getEmpty$();
-    // return this.agencies.getError$();
+    // return this.trips.getEmpty$();
+    // return this.trips.getError$();
   }
 }

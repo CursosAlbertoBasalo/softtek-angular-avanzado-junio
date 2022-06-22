@@ -6,3 +6,8 @@
 
 - [x] Mostrar un listado de las agencias de viajes colaboradoras
 - [x] Mostrar un listado de los viajes disponibles
+
+## 1. Containers
+
+- [ ] Componente para mostrar agencias y otro para viajes
+- [ ] Mostrar el empty cuando no haya datos
