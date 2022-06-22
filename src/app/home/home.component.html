@@ -5,11 +5,7 @@
 </stk-response>
 <ng-template #agenciesTemplate
              let-context>
-  <ul>
-    <li *ngFor="let agency of context">
-      {{ agency.name }} - {{ agency.range }} - {{ agency.status }}
-    </li>
-  </ul>
+  <stk-agencies-list [agencies]="context"></stk-agencies-list>
 </ng-template>
 
 <stk-response [response$]="trips$"
@@ -19,14 +15,5 @@
 </stk-response>
 <ng-template #tripsTemplate
              let-context>
-  <table>
-    <thead>
-      <th>Destino</th>
-      <th>Plazas</th>
-    </thead>
-    <tr *ngFor="let trip of context">
-      <td>{{ trip.destination }}</td>
-      <td>{{ trip.places }}</td>
-    </tr>
-  </table>
+  <stk-trips-list [trips]="context"></stk-trips-list>
 </ng-template>
