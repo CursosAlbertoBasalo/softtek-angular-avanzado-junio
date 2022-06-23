@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot } from '@angular/router';
-import { LoginComponent } from './login.component';
+import { Dirty } from './login.component';
 
 @Injectable({
   providedIn: 'root',
 })
-export class LoginGuard implements CanDeactivate<LoginComponent> {
+export class LoginGuard implements CanDeactivate<Dirty> {
   canDeactivate(
-    component: LoginComponent,
+    component: Dirty,
     currentRoute: ActivatedRouteSnapshot,
     currentState: RouterStateSnapshot,
     nextState?: RouterStateSnapshot
   ): boolean {
-    return component.isDirty === false;
+    return component.canDeactivate();
   }
 }
