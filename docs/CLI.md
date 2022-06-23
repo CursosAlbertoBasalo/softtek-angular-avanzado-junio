@@ -60,6 +60,22 @@ ng g m home --module app.module.ts --route 'home'
 ng g s home/home
 
 
+################################################################################
+# 1️⃣ - Components
+################################################################################
+
 # Create interface
 ng g interface core/api/models/response --type=interface
+
+ng g c shared/components/response --export true
+ng g c home/agenciesList
+ng g c home/tripsList
+
+
+################################################################################
+# 2️⃣ - Router
+################################################################################
+
+# Create module for the agencies page
+ng g m agencies --module=app --route='agencies'
 ```
