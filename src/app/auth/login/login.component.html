@@ -1,6 +1,10 @@
 <h3>fill the form to Log In</h3>
 <form>
-  <input>
-  <input>
-  <button>Log me in</button>
+  <input (change)="isDirty=true">
+  <input (change)="isDirty=true">
+  <input type="button"
+         value="Log me In"
+         (click)="isDirty=false">
 </form>
+<pre>Is Dirty: {{ isDirty }}</pre>
+<pre>Can Deactivate: {{ !isDirty }}</pre>

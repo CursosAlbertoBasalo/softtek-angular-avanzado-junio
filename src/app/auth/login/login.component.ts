@@ -3,14 +3,12 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'stk-login',
   templateUrl: './login.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class LoginComponent implements OnInit {
+  public isDirty: boolean = false;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

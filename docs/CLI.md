@@ -81,4 +81,6 @@ ng g m agencies --module=app --route='agencies'
 ng g r agencies/agencies
 ng g m agencies/new --module=agencies --route='new'
 ng g g core/api/authenticated --implements CanLoad
+ng g m auth/login --route="login" --module="app"
+ng g g auth/login/login --implements=CanDeactivate
 ```
