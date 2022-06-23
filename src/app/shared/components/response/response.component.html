@@ -1,29 +1,37 @@
 <article *ngIf="response$ | async as response; else loading">
-  <ng-container *ngIf="response.data; else error">
+  <ng-container *ngIf="response.data; else error; context: { $implicit : response.error }">
     <header>There are {{ response.data.length }} {{name}}</header>
     <main *ngIf="response.data.length; else empty">
       <ng-container [ngTemplateOutlet]="dataTemplate || defaultPreview"
                     [ngTemplateOutletContext]="{ $implicit: response.data }">
       </ng-container>
-      <!-- <ng-container
-                    *ngTemplateOutlet="dataTemplate then dataTemplate ; else defaultPreview; context : {$implicit: response.data}">
-      </ng-container> -->
-      <ng-template #defaultPreview>
-        <stk-preview [data]="response.data"></stk-preview>
-      </ng-template>
     </main>
     <footer>
       <stk-refresh (refresh)="reload.emit()"></stk-refresh>
     </footer>
   </ng-container>
-  <ng-template #error>
-    <stk-error [dataName]="name"
-               [error]="response.error || ''"></stk-error>
-  </ng-template>
 </article>
+
+<ng-template #error
+             let-error>
+  <stk-error [dataName]="name"
+             [error]="error"> </stk-error>
+</ng-template>
+
+<ng-template #defaultPreview
+             let-data>
+  <stk-preview [data]="data"></stk-preview>
+</ng-template>
+
 <ng-template #loading>
   <stk-loading [dataName]="name"></stk-loading>
 </ng-template>
+
 <ng-template #empty>
   <stk-empty [dataName]="name"></stk-empty>
 </ng-template>
+
+
+<!-- <ng-container
+          *ngTemplateOutlet="dataTemplate then dataTemplate ; else defaultPreview; context : {$implicit: response.data}">
+        </ng-container> -->
