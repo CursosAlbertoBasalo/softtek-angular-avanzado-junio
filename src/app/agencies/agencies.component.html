@@ -1,1 +1,12 @@
-<p>agencies works!</p>
+<article>
+  <header>The {{ name }} page with {{ agencies.data?.length }} items</header>
+  <ul>
+    <li *ngFor="let agency of agencies.data">
+      <a [routerLink]="[agency.id]"> {{ agency.name }} </a>
+    </li>
+  </ul>
+  <router-outlet></router-outlet>
+  <footer>
+    <a [routerLink]="['./new']">➕ Add a new Agency</a>
+  </footer>
+</article>

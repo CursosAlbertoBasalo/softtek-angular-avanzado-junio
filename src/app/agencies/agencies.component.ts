@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Agency } from '@stk/models/agency.interface';
+import { Response } from '@stk/models/response.interface';
 
 @Component({
   selector: 'stk-agencies',
   templateUrl: './agencies.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class AgenciesComponent implements OnInit {
+  public agencies: Response<Agency[]> = this.route.snapshot.data['agencies'];
+  public name: string = this.route.snapshot.data['name'];
+  constructor(private route: ActivatedRoute) {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

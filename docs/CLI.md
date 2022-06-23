@@ -78,4 +78,7 @@ ng g c home/tripsList
 
 # Create module for the agencies page
 ng g m agencies --module=app --route='agencies'
+ng g r agencies/agencies
+ng g m agencies/new --module=agencies --route='new'
+ng g g core/api/authenticated --implements CanLoad
 ```
