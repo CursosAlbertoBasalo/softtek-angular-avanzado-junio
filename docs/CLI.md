@@ -58,29 +58,42 @@ ng g c shared/components/refresh --export true
 # Create Home module for home page
 ng g m home --module app.module.ts --route 'home'
 ng g s home/home
-
+```
 
 ################################################################################
+
 # 1️⃣ - Components
+
 ################################################################################
 
 # Create interface
+
 ng g interface core/api/models/response --type=interface
 
 ng g c shared/components/response --export true
 ng g c home/agenciesList
 ng g c home/tripsList
 
-
 ################################################################################
+
 # 2️⃣ - Router
+
 ################################################################################
 
 # Create module for the agencies page
+
 ng g m agencies --module=app --route='agencies'
 ng g r agencies/agencies
 ng g m agencies/new --module=agencies --route='new'
 ng g g core/api/authenticated --implements CanLoad
 ng g m auth/login --route="login" --module="app"
 ng g g auth/login/login --implements=CanDeactivate
+
+```
+
+################################################################################
+# 3️⃣ - Forms
+################################################################################
+
+ng g m auth/register --route="register" --module="app"
 ```

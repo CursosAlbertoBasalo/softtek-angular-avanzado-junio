@@ -20,10 +20,30 @@
            [attr.aria-invalid]="hasError('password')">
     <small *ngIf="mustShowMessage('password')">{{ getErrorMessage('password') }} </small>
   </div>
+  <div>
+    <label for="confirmPassword">Confirm your password </label>
+    <input type="password"
+           id="confirmPassword"
+           name="confirmPassword"
+           formControlName="confirmPassword"
+           placeholder="Confirm Password"
+           [attr.aria-invalid]="hasError('confirmPassword')">
+    <small *ngIf="mustShowMessage('confirmPassword')">{{ getErrorMessage('confirmPassword') }}
+    </small>
+    <small>{{ getPasswordMatchMessage()}}
+    </small>
+  </div>
+  <div>
+    <input type="checkbox"
+           id="acceptTerms"
+           name="acceptTerms"
+           formControlName="acceptTerms"
+           [attr.aria-invalid]="hasError('acceptTerms')">
+    <label for="acceptTerms">Accept Terms </label>
+    <small *ngIf="mustShowMessage('acceptTerms')">{{ getErrorMessage('acceptTerms') }} </small>
+  </div>
   <input type="button"
          [disabled]="form.invalid"
          value="Log me In"
          (click)="onSave()">
 </form>
-<pre>Is Dirty: {{ isDirty }}</pre>
-<pre>Can Deactivate: {{ !isDirty }}</pre>
