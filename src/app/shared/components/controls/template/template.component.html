@@ -1,0 +1,10 @@
+<label [for]="formControlName"> {{ label || formControlName }}</label>
+<input [type]="type"
+       [id]="formControlName"
+       [name]="formControlName"
+       [placeholder]="placeholder || label || formControlName"
+       [attr.aria-invalid]="hasError()"
+       [value]="value"
+       (keyup)="onChange($event)"
+       (blur)="onBlur()">
+<small *ngIf="mustShowMessage()">{{ getErrorMessage() }} </small>

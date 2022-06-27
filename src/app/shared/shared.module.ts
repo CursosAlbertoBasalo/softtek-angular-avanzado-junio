@@ -9,6 +9,7 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { PreviewComponent } from './components/preview/preview.component';
 import { RefreshComponent } from './components/refresh/refresh.component';
 import { ResponseComponent } from './components/response/response.component';
+import { TemplateComponent } from './components/controls/template/template.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ResponseComponent } from './components/response/response.component';
     PreviewComponent,
     ResponseComponent,
     EmailComponent,
+    TemplateComponent,
   ],
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
   exports: [
@@ -31,6 +33,7 @@ import { ResponseComponent } from './components/response/response.component';
     EmailComponent,
     ReactiveFormsModule,
     RouterModule,
+    TemplateComponent,
   ],
 })
 export class SharedModule {}

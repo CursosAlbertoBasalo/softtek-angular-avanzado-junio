@@ -1,29 +1,20 @@
 <h3>fill the form to Log In</h3>
 <form [formGroup]="form">
+  <stk-template formControlName="name"
+                [control]="getControl('name')"
+                type="text"
+                label="Your nick name">
+  </stk-template>
   <stk-email formControlName="email"></stk-email>
-  <div>
-    <label for="password">Your password </label>
-    <input type="password"
-           id="password"
-           name="password"
-           formControlName="password"
-           placeholder="Your password"
-           [attr.aria-invalid]="hasError('password')">
-    <small *ngIf="mustShowMessage('password')">{{ getErrorMessage('password') }} </small>
-  </div>
-  <div>
-    <label for="confirmPassword">Confirm your password </label>
-    <input type="password"
-           id="confirmPassword"
-           name="confirmPassword"
-           formControlName="confirmPassword"
-           placeholder="Confirm Password"
-           [attr.aria-invalid]="hasError('confirmPassword')">
-    <small *ngIf="mustShowMessage('confirmPassword')">{{ getErrorMessage('confirmPassword') }}
-    </small>
-    <small>{{ getPasswordMatchMessage()}}
-    </small>
-  </div>
+  <stk-template formControlName="password"
+                [control]="getControl('password')"
+                type="Password"
+                label="Your password"></stk-template>
+  <stk-template formControlName="confirmPassword"
+                [control]="getControl('confirmPassword')"
+                type="Password"
+                label="Confirm the password"></stk-template>
+  <small>{{ getPasswordMatchMessage()}}</small>
   <div>
     <input type="checkbox"
            id="acceptTerms"

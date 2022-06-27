@@ -18,6 +18,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(formBuilder: FormBuilder) {
     this.form = formBuilder.group({
+      name: new FormControl('anonymous', Validators.required),
       email: new FormControl(''),
       password: new FormControl('', [
         Validators.required,
