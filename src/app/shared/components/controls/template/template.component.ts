@@ -11,7 +11,7 @@ import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angul
 })
 export class TemplateComponent implements OnInit, ControlValueAccessor {
   @Input() public formControlName: string = '';
-  @Input() public type: string = 'text';
+  @Input() public type: 'text' | 'password' | 'email' | 'number' = 'text';
   @Input() public label!: string;
   @Input() public placeholder!: string;
   @Input() public control!: AbstractControl | null;
