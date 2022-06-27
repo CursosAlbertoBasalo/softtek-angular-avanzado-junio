@@ -1,5 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { EmailComponent } from './components/controls/email/email.component';
 import { EmptyComponent } from './components/empty/empty.component';
 import { ErrorComponent } from './components/error/error.component';
 import { LoadingComponent } from './components/loading/loading.component';
@@ -15,8 +18,9 @@ import { ResponseComponent } from './components/response/response.component';
     RefreshComponent,
     PreviewComponent,
     ResponseComponent,
+    EmailComponent,
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule],
   exports: [
     LoadingComponent,
     ErrorComponent,
@@ -24,6 +28,9 @@ import { ResponseComponent } from './components/response/response.component';
     RefreshComponent,
     PreviewComponent,
     ResponseComponent,
+    EmailComponent,
+    ReactiveFormsModule,
+    RouterModule,
   ],
 })
 export class SharedModule {}

@@ -1,0 +1,11 @@
+<div [formGroup]="form">
+  <label for="email">Email Address</label>
+  <input type="email"
+         id="email"
+         name="email"
+         formControlName="email"
+         placeholder="Your email address"
+         [attr.aria-invalid]="hasError('email')"
+         (blur)="touchedCallback()">
+  <small *ngIf="mustShowMessage('email')">{{ getErrorMessage('email') }} </small>
+</div>

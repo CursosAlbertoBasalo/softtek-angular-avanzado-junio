@@ -1,24 +1,43 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, forwardRef, OnInit } from '@angular/core';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  NG_VALUE_ACCESSOR,
+  Validators,
+} from '@angular/forms';
 
 @Component({
-  selector: 'stk-login',
-  templateUrl: './login.component.html',
+  selector: 'stk-email',
+  templateUrl: './email.component.html',
   styles: [],
+  providers: [
+    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => EmailComponent), multi: true },
+  ],
 })
-export class LoginComponent implements OnInit, Dirty {
-  public isDirty: boolean = false;
+export class EmailComponent implements OnInit, ControlValueAccessor {
   public form: FormGroup;
-  private passwordValidators = [
-    Validators.required,
-    Validators.minLength(4),
-    Validators.maxLength(10),
-  ];
+
+  public touchedCallback!: () => void;
+
   constructor(formBuilder: FormBuilder) {
     this.form = formBuilder.group({
-      email: new FormControl('a@b.c'),
-      password: new FormControl('', this.passwordValidators),
+      email: new FormControl('', [Validators.required, Validators.email]),
     });
+  }
+
+  public writeValue(email: any): void {
+    email && this.form.setValue({ email }, { emitEvent: false });
+  }
+
+  public registerOnChange(changeCallBack: (nv: any) => void): void {
+    this.form.valueChanges.subscribe(changeCallBack);
+  }
+
+  public registerOnTouched(touchedCallback: () => void): void {
+    this.touchedCallback = touchedCallback;
   }
 
   ngOnInit(): void {}
@@ -52,21 +71,7 @@ export class LoginComponent implements OnInit, Dirty {
     return errorMessage;
   }
 
-  public canDeactivate(): boolean {
-    if (!this.isDirty) return true;
-    return window.confirm('Exit without save?');
-  }
-
   public getControl(controlName: string): AbstractControl | null {
     return this.form.get(controlName);
   }
-  public onSave() {
-    const loginData = this.form.value;
-    loginData.email = loginData.email.email || loginData.email;
-    console.log('Login data: ', loginData);
-  }
-}
-
-export interface Dirty {
-  canDeactivate(): boolean;
 }

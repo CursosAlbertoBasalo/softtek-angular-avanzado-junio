@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(formBuilder: FormBuilder) {
     this.form = formBuilder.group({
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl(''),
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(4),
@@ -91,5 +91,9 @@ export class RegisterComponent implements OnInit {
     return this.form.get(controlName);
   }
 
-  public onSave() {}
+  public onSave() {
+    const registerData = this.form.value;
+    registerData.email = registerData.email.email || registerData.email;
+    console.log('Register data: ', registerData);
+  }
 }
