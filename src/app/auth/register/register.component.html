@@ -8,11 +8,11 @@
   <stk-email formControlName="email"></stk-email>
   <stk-template formControlName="password"
                 [control]="getControl('password')"
-                type="Password"
+                type="password"
                 label="Your password"></stk-template>
   <stk-template formControlName="confirmPassword"
                 [control]="getControl('confirmPassword')"
-                type="Password"
+                type="password"
                 label="Confirm the password"></stk-template>
   <small>{{ getPasswordMatchMessage()}}</small>
   <div>
