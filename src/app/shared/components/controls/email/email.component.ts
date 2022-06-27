@@ -29,7 +29,7 @@ export class EmailComponent implements OnInit, ControlValueAccessor {
   }
 
   public writeValue(email: any): void {
-    email && this.form.setValue({ email }, { emitEvent: false });
+    // email && this.form.setValue({ email }, { emitEvent: false });
   }
 
   public registerOnChange(changeCallBack: (nv: any) => void): void {
@@ -37,7 +37,7 @@ export class EmailComponent implements OnInit, ControlValueAccessor {
   }
 
   public registerOnTouched(touchedCallback: () => void): void {
-    this.touchedCallback = touchedCallback;
+    // this.touchedCallback = touchedCallback;
   }
 
   ngOnInit(): void {}
@@ -62,12 +62,6 @@ export class EmailComponent implements OnInit, ControlValueAccessor {
     let errorMessage = '';
     errorMessage += errors['required'] ? '🔥 Field is required' : '';
     errorMessage += errors['email'] ? '🔥 Should be an email address' : '';
-    errorMessage += errors['minlength']
-      ? `🔥 More than ${errors['minlength'].requiredLength} chars`
-      : '';
-    errorMessage += errors['maxlength']
-      ? `🔥 Less than ${errors['maxlength'].requiredLength} chars`
-      : '';
     return errorMessage;
   }
 
