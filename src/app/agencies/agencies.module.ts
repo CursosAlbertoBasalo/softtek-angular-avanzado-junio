@@ -1,17 +1,12 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
+import { SharedModule } from '@stk/shared/shared.module';
 import { AgenciesRoutingModule } from './agencies-routing.module';
 import { AgenciesComponent } from './agencies.component';
 
-
 @NgModule({
-  declarations: [
-    AgenciesComponent
-  ],
-  imports: [
-    CommonModule,
-    AgenciesRoutingModule
-  ]
+  declarations: [AgenciesComponent],
+  imports: [CommonModule, AgenciesRoutingModule, SharedModule],
 })
-export class AgenciesModule { }
+export class AgenciesModule {}

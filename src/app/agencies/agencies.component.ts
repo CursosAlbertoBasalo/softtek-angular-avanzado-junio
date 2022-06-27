@@ -11,7 +11,14 @@ import { Response } from '@stk/models/response.interface';
 export class AgenciesComponent implements OnInit {
   public agencies: Response<Agency[]> = this.route.snapshot.data['agencies'];
   public name: string = this.route.snapshot.data['name'];
+
+  public searchTerm = '';
+
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {}
+
+  onSearch(searchTerm: string) {
+    this.searchTerm = searchTerm;
+  }
 }

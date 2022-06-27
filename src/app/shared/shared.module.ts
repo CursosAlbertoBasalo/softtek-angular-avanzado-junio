@@ -10,6 +10,7 @@ import { PreviewComponent } from './components/preview/preview.component';
 import { RefreshComponent } from './components/refresh/refresh.component';
 import { ResponseComponent } from './components/response/response.component';
 import { TemplateComponent } from './components/controls/template/template.component';
+import { SearchComponent } from './components/controls/search/search.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { TemplateComponent } from './components/controls/template/template.compo
     ResponseComponent,
     EmailComponent,
     TemplateComponent,
+    SearchComponent,
   ],
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
   exports: [
@@ -34,6 +36,7 @@ import { TemplateComponent } from './components/controls/template/template.compo
     ReactiveFormsModule,
     RouterModule,
     TemplateComponent,
+    SearchComponent,
   ],
 })
 export class SharedModule {}

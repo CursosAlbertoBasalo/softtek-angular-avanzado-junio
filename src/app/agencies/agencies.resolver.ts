@@ -15,6 +15,7 @@ export class AgenciesResolver implements Resolve<Response<Agency[]>> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<Response<Agency[]>> {
-    return this.agenciesService.getAll$();
+    // return this.agenciesService.getAll$();
+    return this.agenciesService.getEmpty$();
   }
 }
