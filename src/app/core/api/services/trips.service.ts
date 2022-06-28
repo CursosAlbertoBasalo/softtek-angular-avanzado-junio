@@ -26,4 +26,8 @@ export class TripsService extends ResponseBase<Trip[]> {
   getError$(): Observable<any> {
     return this.http.get<Trip[]>(this.apiUrl + '/error').pipe(this.responsePipe);
   }
+  public getByText$(text: string | null): Observable<Response<Trip[]>> {
+    if (text === null || text == '') return this.getAll$();
+    return this.http.get<Trip[]>(this.apiUrl + '?q=' + text).pipe(this.responsePipe); // .pipe(delay(3000));
+  }
 }
