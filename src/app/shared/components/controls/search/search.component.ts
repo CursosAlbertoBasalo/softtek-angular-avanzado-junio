@@ -1,4 +1,5 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged, filter, fromEvent, map, tap } from 'rxjs';
 
 @Component({
@@ -13,7 +14,7 @@ export class SearchComponent implements OnInit {
 
   // public searchTerm$!: Observable<unknown>;
 
-  constructor() {}
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
     const nativeSource$ = fromEvent(this.searchInput.nativeElement, 'keyup');
@@ -27,7 +28,13 @@ export class SearchComponent implements OnInit {
         // map((texto) => ({ elTexto: texto })),
         // tap((objeto) => (objeto.elTexto = 'Gustavo')),
         // map((objeto) => objeto.elTexto),
-        tap((searchTerm) => this.search.emit(searchTerm))
+        tap((searchTerm) => this.search.emit(searchTerm)),
+        tap((searchTerm) =>
+          this.router.navigate([], {
+            queryParams: { q: searchTerm },
+            relativeTo: this.activatedRoute,
+          })
+        )
       )
       .subscribe();
   }
