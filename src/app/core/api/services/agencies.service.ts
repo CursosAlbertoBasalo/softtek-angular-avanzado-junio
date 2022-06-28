@@ -16,14 +16,18 @@ export class AgenciesService extends ResponseBase<Agency[]> {
     super();
   }
 
-  getAll$(): Observable<Response<Agency[]>> {
+  public getAll$(): Observable<Response<Agency[]>> {
     console.log('getAll$', this.apiUrl);
     return this.http.get<Agency[]>(this.apiUrl).pipe(this.responsePipe);
   }
-  getEmpty$(): Observable<any> {
+  public getEmpty$(): Observable<any> {
     return of([]).pipe(this.responsePipe);
   }
-  getError$(): Observable<any> {
+  public getError$(): Observable<any> {
     return this.http.get<Agency[]>(this.apiUrl + '/error').pipe(this.responsePipe);
+  }
+  public getByText$(text: string | null): Observable<Response<Agency[]>> {
+    if (text === null || text == '') return this.getAll$();
+    return this.http.get<Agency[]>(this.apiUrl + '?q=' + text).pipe(this.responsePipe); // .pipe(delay(3000));
   }
 }

@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { debounceTime, distinctUntilChanged, filter, fromEvent, map, Observable, tap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, fromEvent, map, tap } from 'rxjs';
 
 @Component({
   selector: 'stk-search',
@@ -11,18 +11,24 @@ export class SearchComponent implements OnInit {
 
   @ViewChild('searchInput', { static: true }) public searchInput!: ElementRef;
 
-  public searchTerm$!: Observable<unknown>;
+  // public searchTerm$!: Observable<unknown>;
 
   constructor() {}
 
   ngOnInit(): void {
     const nativeSource$ = fromEvent(this.searchInput.nativeElement, 'keyup');
-    this.searchTerm$ = nativeSource$.pipe(
-      map((event: any) => (event as any).target.value as string),
-      debounceTime(600),
-      filter((searchTerm) => searchTerm.length > 2),
-      distinctUntilChanged(),
-      tap((searchTerm) => this.search.emit(searchTerm))
-    );
+    //this.searchTerm$ =
+    nativeSource$
+      .pipe(
+        debounceTime(600),
+        map((event: any) => (event as any).target.value as string),
+        filter((searchTerm) => searchTerm.length > 2),
+        distinctUntilChanged(),
+        // map((texto) => ({ elTexto: texto })),
+        // tap((objeto) => (objeto.elTexto = 'Gustavo')),
+        // map((objeto) => objeto.elTexto),
+        tap((searchTerm) => this.search.emit(searchTerm))
+      )
+      .subscribe();
   }
 }
