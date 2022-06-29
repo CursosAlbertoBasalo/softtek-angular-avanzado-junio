@@ -1,14 +1,15 @@
-import { BehaviorSubject, distinctUntilChanged, map, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, filter, map, Observable, Subject } from 'rxjs';
 
 export type Action = { type: string; payload: any };
 export type Reducer<T> = (state: T, payload: any) => T;
 export type Selector<T, K> = (state: T) => K;
+export type Change<T> = { action: Action; current: T; next: T };
 
 export class BaseStore<T> {
   private state$: BehaviorSubject<T>;
+  private changes$ = new Subject<Change<T>>();
   public reducers: Map<string, Reducer<T>> = new Map();
   public changes: any[] = [];
-  public changes$ = new Subject<any>();
 
   constructor(initialState: T) {
     const nextState = this.clone(initialState);
@@ -43,6 +44,10 @@ export class BaseStore<T> {
 
   public select$<K>(selector: Selector<T, K>): Observable<K> {
     return this.get$().pipe(map(selector), distinctUntilChanged());
+  }
+
+  public filter$<K>(actionType: string): Observable<Change<T>> {
+    return this.changes$.asObservable().pipe(filter((change) => change.action.type === actionType));
   }
 
   private clone(source: any) {

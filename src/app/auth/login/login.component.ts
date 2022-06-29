@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit, Dirty {
     const loginData = this.form.value;
     loginData.email = loginData.email.email || loginData.email;
     console.log('Login data: ', loginData);
-    this.sessionService.validateUserCommand(loginData.email, loginData.password);
+    this.sessionService.validateUser(loginData.email, loginData.password);
   }
 }
 

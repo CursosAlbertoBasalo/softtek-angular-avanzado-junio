@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Action, BaseStore } from './base.store';
+import { Action, BaseStore, Change } from './base.store';
 
-type Session = {
+export type Session = {
   isValidating: boolean;
   isAuthenticated: boolean;
   user: { email: string; password: string; roles: string[] };
@@ -24,10 +24,9 @@ export class SessionService {
     this.store$.reducers.set('LOG_IN', this.logInReducer);
     this.store$.reducers.set('LOG_OUT', this.logOutReducer);
     this.store$.reducers.set('ADD_ROLE', this.addRoleReducer);
-    this.store$.changes$.subscribe((change) => console.warn('Session change', change));
   }
 
-  public validateUserCommand(email: string, password: string) {
+  public validateUser(email: string, password: string) {
     const command: Action = { type: 'VALIDATING', payload: { email, password } };
     this.store$.dispatch(command);
   }
@@ -63,8 +62,8 @@ export class SessionService {
     return this.store$.get$();
   }
 
-  public getChanges$() {
-    return this.store$.changes$;
+  public getValidatingCommand$(): Observable<Change<Session>> {
+    return this.store$.filter$('VALIDATING');
   }
 
   private validatingReducer(state: Session, payload: any): Session {

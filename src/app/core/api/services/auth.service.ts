@@ -7,15 +7,16 @@ import { SessionService } from '../../session.service';
 })
 export class AuthService {
   constructor(private http: HttpClient, private sessionService: SessionService) {
-    this.sessionService.getChanges$().subscribe((change) => {
-      if (change.action.type == 'VALIDATING') {
-        const { email, password } = change.next.user;
-        this.http.post('', email, password).subscribe(
-          () => this.sessionService.logInUser(email),
-          () => this.sessionService.logOutUser()
-        );
-      }
+    this.sessionService.getValidatingCommand$().subscribe((change) => {
+      this.validatingEffect(change.action.payload);
     });
+  }
+
+  private validatingEffect(payload: any) {
+    this.http.post('', payload).subscribe(
+      () => this.sessionService.logInUser(payload.email),
+      () => this.sessionService.logOutUser()
+    );
   }
 }
 // { action, current, next }
