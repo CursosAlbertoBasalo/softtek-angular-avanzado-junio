@@ -1,22 +1,45 @@
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, map, Observable } from 'rxjs';
+
+export type Action = { type: string; payload: any };
+export type Reducer<T> = (state: T, payload: any) => T;
+export type Selector<T, K> = (state: T) => K;
 
 export class StoreService<T> {
   private state$: BehaviorSubject<T>;
+  public reducers: Map<string, Reducer<T>> = new Map();
+  public changes: any[] = [];
 
   constructor(initialState: T) {
-    this.state$ = new BehaviorSubject(this.clone(initialState));
+    const nextState = this.clone(initialState);
+    this.state$ = new BehaviorSubject(nextState);
   }
 
   public get(): T {
-    return this.clone(this.state$.value);
+    const currentState = this.state$.value;
+    return this.clone(currentState);
   }
 
   public set(newState: T) {
-    this.state$.next(this.clone(newState));
+    const nextState = this.clone(newState);
+    this.state$.next(nextState);
+  }
+
+  public dispatch(action: Action) {
+    const reducer = this.reducers.get(action.type);
+    if (reducer == null) throw Error('No reducer found for action type ' + action.type);
+    const current = this.get();
+    const next = reducer(current, action.payload);
+    this.set(next);
+    this.changes.push({ action, current, next });
   }
 
   public get$(): Observable<T> {
-    return this.state$.asObservable().pipe(map((state) => this.clone(state)));
+    const state$ = this.state$.asObservable();
+    return state$.pipe(map((state: T) => this.clone(state)));
+  }
+
+  public select$<K>(selector: Selector<T, K>): Observable<K> {
+    return this.get$().pipe(map(selector), distinctUntilChanged());
   }
 
   private clone(source: any) {
@@ -24,16 +47,55 @@ export class StoreService<T> {
   }
 }
 
-type Cuenta = { propietario: string; saldo: number };
+// type Cuenta = { propietario: string[]; saldo: number };
 
-const estadoInicial = { propietario: 'Daniel', saldo: 0 };
-const cuenta$ = new StoreService<Cuenta>(estadoInicial);
-const cuenta = cuenta$.get();
-cuenta.propietario = 'Carmelo'; // Carmelo
+// function ingresar(state: Cuenta, payload: number): Cuenta {
+//   const cuenta = { ...state };
+//   cuenta.saldo += payload;
+//   return cuenta;
+// }
+// function agregarTitular(state: Cuenta, payload: string): Cuenta {
+//   const cuenta = { ...state };
+//   cuenta.propietario.push(payload);
+//   return cuenta;
+// }
 
-const otra = cuenta$.get();
-otra.propietario; // Daniel
+// const estadoInicial = { propietario: ['Daniel'], saldo: 0 };
+// const cuenta$ = new StoreService<Cuenta>(estadoInicial);
 
-// cuenta$.state$.subscribe();
-// cuenta$.state$.next()
-cuenta$.get$().subscribe();
+// const reducers: Map<string, Reducer<Cuenta>> = new Map();
+// reducers.set('INGRESAR', ingresar);
+// reducers.set('AGREGAR_TITULAR', agregarTitular);
+
+// cuenta$.reducers = reducers;
+
+// const agregarCarmeloAction: Action = { type: 'AGREGAR_TITULAR', payload: 'Carmelo' };
+// const current: Cuenta = { propietario: ['Daniel'], saldo: 100 };
+// const reducer = reducers.get(agregarCarmeloAction.type);
+// const ingresarAction: Action = { type: 'INGRESAR', payload: 5 };
+// if (reducer) {
+//   const newState = reducer(current, agregarCarmeloAction.payload);
+// } else {
+//   console.error('No reducer for this action type');
+// }
+
+// cuenta$.get$().subscribe((cuenta) => console.log(cuenta));
+// //  { propietario: ['Daniel'], saldo: 0 };
+// //  { propietario: ['Daniel'], saldo: 100 };
+// //  { propietario: ['Daniel', 'Carmelo'], saldo: 100 };
+// //  { propietario: ['Daniel', 'Carmelo'], saldo: 105 };
+
+// cuenta$.select$<number>((cuenta) => cuenta.saldo).subscribe((saldo) => console.log(saldo));
+// //   0
+// //   100
+// //   105
+
+// // const cuenta = cuenta$.get();
+// // cuenta.propietario = 'Carmelo'; // Carmelo
+
+// // const otra = cuenta$.get();
+// // otra.propietario; // Daniel
+
+// // // cuenta$.state$.subscribe();
+// // // cuenta$.state$.next()
+// // cuenta$.get$().subscribe();
