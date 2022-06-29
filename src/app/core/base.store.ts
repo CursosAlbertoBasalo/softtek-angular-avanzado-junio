@@ -4,7 +4,7 @@ export type Action = { type: string; payload: any };
 export type Reducer<T> = (state: T, payload: any) => T;
 export type Selector<T, K> = (state: T) => K;
 
-export class StoreService<T> {
+export class BaseStore<T> {
   private state$: BehaviorSubject<T>;
   public reducers: Map<string, Reducer<T>> = new Map();
   public changes: any[] = [];
