@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { SessionService } from 'src/app/core/session.service';
 
 @Component({
   selector: 'stk-login',
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit, Dirty {
     Validators.minLength(4),
     Validators.maxLength(10),
   ];
-  constructor(formBuilder: FormBuilder) {
+  constructor(formBuilder: FormBuilder, private sessionService: SessionService) {
     this.form = formBuilder.group({
       email: new FormControl('a@b.c'),
       password: new FormControl('', this.passwordValidators),
@@ -64,6 +65,7 @@ export class LoginComponent implements OnInit, Dirty {
     const loginData = this.form.value;
     loginData.email = loginData.email.email || loginData.email;
     console.log('Login data: ', loginData);
+    this.sessionService.logInUser(loginData.email);
   }
 }
 

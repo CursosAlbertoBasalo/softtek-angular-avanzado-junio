@@ -3,7 +3,11 @@
     <a routerLink="/">
       🚀 {{ title | uppercase }}
     </a>
-    <a [routerLink]="['login']"> 🔐 Log In </a>
+    <a *ngIf="(isAuthenticated$ | async)==false"
+       [routerLink]="['login']"> 🔐 Log In </a>
+    <a *ngIf="(isAuthenticated$ | async)==true"
+       [routerLink]="['']"
+       (click)="onLogOut()"> 🌅 Log Out </a>
     <a [routerLink]="['agencies']"> ➡️ Agencies </a>
     <a [routerLink]="['trips']"> ➡️ Trips </a>
   </nav>

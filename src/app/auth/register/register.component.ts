@@ -7,6 +7,7 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { SessionService } from 'src/app/core/session.service';
 
 @Component({
   selector: 'stk-register',
@@ -16,7 +17,7 @@ import {
 export class RegisterComponent implements OnInit {
   public form: FormGroup;
 
-  constructor(formBuilder: FormBuilder) {
+  constructor(formBuilder: FormBuilder, private sessionService: SessionService) {
     this.form = formBuilder.group({
       name: new FormControl('anonymous', Validators.required),
       email: new FormControl(''),
@@ -96,5 +97,6 @@ export class RegisterComponent implements OnInit {
     const registerData = this.form.value;
     registerData.email = registerData.email.email || registerData.email;
     console.log('Register data: ', registerData);
+    this.sessionService.logInUser(registerData.email);
   }
 }
