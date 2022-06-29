@@ -2,19 +2,34 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Action, BaseStore } from './base.store';
 
-type Session = { isAuthenticated: boolean; user: { email: string; roles: string[] } };
+type Session = {
+  isValidating: boolean;
+  isAuthenticated: boolean;
+  user: { email: string; password: string; roles: string[] };
+};
 
 @Injectable({
   providedIn: 'root',
 })
 export class SessionService {
-  private initialState: Session = { isAuthenticated: false, user: { email: '', roles: [] } };
+  private initialState: Session = {
+    isValidating: false,
+    isAuthenticated: false,
+    user: { email: '', password: '', roles: [] },
+  };
   private store$ = new BaseStore<Session>(this.initialState);
 
   constructor() {
+    this.store$.reducers.set('VALIDATING', this.validatingReducer);
     this.store$.reducers.set('LOG_IN', this.logInReducer);
     this.store$.reducers.set('LOG_OUT', this.logOutReducer);
     this.store$.reducers.set('ADD_ROLE', this.addRoleReducer);
+    this.store$.changes$.subscribe((change) => console.warn('Session change', change));
+  }
+
+  public validateUserCommand(email: string, password: string) {
+    const command: Action = { type: 'VALIDATING', payload: { email, password } };
+    this.store$.dispatch(command);
   }
 
   public logInUser(email: string) {
@@ -48,16 +63,32 @@ export class SessionService {
     return this.store$.get$();
   }
 
+  public getChanges$() {
+    return this.store$.changes$;
+  }
+
+  private validatingReducer(state: Session, payload: any): Session {
+    const session = { ...state };
+    session.isValidating = true;
+    session.user.email = payload.email;
+    session.user.password = payload.password;
+    return session;
+  }
+
   private logInReducer(state: Session, payload: any): Session {
     const session = { ...state };
+    session.isValidating = false;
     session.isAuthenticated = true;
     session.user.email = payload;
+    session.user.password = '';
     return session;
   }
 
   private logOutReducer(state: Session, payload: any): Session {
     const session = { ...state };
+    session.isValidating = false;
     session.isAuthenticated = false;
+    session.user.password = '';
     return session;
   }
   private addRoleReducer(state: Session, payload: string): Session {

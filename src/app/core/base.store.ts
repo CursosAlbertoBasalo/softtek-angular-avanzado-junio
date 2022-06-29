@@ -1,4 +1,4 @@
-import { BehaviorSubject, distinctUntilChanged, map, Observable } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, map, Observable, Subject } from 'rxjs';
 
 export type Action = { type: string; payload: any };
 export type Reducer<T> = (state: T, payload: any) => T;
@@ -8,6 +8,7 @@ export class BaseStore<T> {
   private state$: BehaviorSubject<T>;
   public reducers: Map<string, Reducer<T>> = new Map();
   public changes: any[] = [];
+  public changes$ = new Subject<any>();
 
   constructor(initialState: T) {
     const nextState = this.clone(initialState);
@@ -30,7 +31,9 @@ export class BaseStore<T> {
     const current = this.get();
     const next = reducer(current, action.payload);
     this.set(next);
-    this.changes.push({ action, current, next });
+    const change = { action, current, next };
+    this.changes.push(change);
+    this.changes$.next(change);
   }
 
   public get$(): Observable<T> {
