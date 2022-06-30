@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Action, BaseStore } from './base.store';
+import { LoggerBaseService } from './logger-base.service';
 
 export type Session = {
   isValidating: boolean;
@@ -19,13 +20,15 @@ export class SessionFacade {
   };
   private store$ = new BaseStore<Session>(this.initialState);
 
-  constructor() {
+  constructor(private logger: LoggerBaseService) {
     this.store$.reducer = this.reducer;
+    this.logger.warn('Starting store');
   }
 
   public validateUser(email: string, password: string) {
     const command: Action = { type: 'VALIDATING', payload: { email, password } };
     this.store$.dispatch(command);
+    this.logger.log('Starting store');
   }
 
   public logInUser(email: string) {
