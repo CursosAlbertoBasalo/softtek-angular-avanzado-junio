@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SessionService } from '../../session.service';
+import { SessionFacade } from '../../session.service';
 
 @Component({
   selector: 'stk-header',
@@ -10,7 +10,7 @@ import { SessionService } from '../../session.service';
 export class HeaderComponent implements OnInit {
   public title = 'Softtek';
   public isAuthenticated$: Observable<boolean> = this.sessionService.isAuthenticated$();
-  constructor(private sessionService: SessionService) {}
+  constructor(private sessionService: SessionFacade) {}
 
   ngOnInit(): void {}
 

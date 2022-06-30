@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { SessionService } from 'src/app/core/session.service';
+import { SessionFacade } from 'src/app/core/session.service';
 
 @Component({
   selector: 'stk-login',
@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit, Dirty {
   ];
   constructor(
     formBuilder: FormBuilder,
-    private sessionService: SessionService,
+    private sessionService: SessionFacade,
     private http: HttpClient
   ) {
     this.form = formBuilder.group({
@@ -71,6 +71,8 @@ export class LoginComponent implements OnInit, Dirty {
     loginData.email = loginData.email.email || loginData.email;
     console.log('Login data: ', loginData);
     this.sessionService.validateUser(loginData.email, loginData.password);
+    // const command: Action = { type: 'VALIDATING', payload: { email, password } };
+    // this.store$.dispatch(command);
   }
 }
 

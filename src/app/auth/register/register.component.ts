@@ -7,7 +7,7 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { SessionService } from 'src/app/core/session.service';
+import { SessionFacade } from 'src/app/core/session.service';
 
 @Component({
   selector: 'stk-register',
@@ -17,7 +17,7 @@ import { SessionService } from 'src/app/core/session.service';
 export class RegisterComponent implements OnInit {
   public form: FormGroup;
 
-  constructor(formBuilder: FormBuilder, private sessionService: SessionService) {
+  constructor(formBuilder: FormBuilder, private sessionService: SessionFacade) {
     this.form = formBuilder.group({
       name: new FormControl('anonymous', Validators.required),
       email: new FormControl(''),

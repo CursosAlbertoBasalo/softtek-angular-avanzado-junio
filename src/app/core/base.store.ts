@@ -1,15 +1,15 @@
 import { BehaviorSubject, distinctUntilChanged, filter, map, Observable, Subject } from 'rxjs';
 
 export type Action = { type: string; payload: any };
-export type Reducer<T> = (state: T, payload: any) => T;
+export type Reducer<T> = (state: T, action: Action) => T;
 export type Selector<T, K> = (state: T) => K;
 export type Change<T> = { action: Action; current: T; next: T };
 
 export class BaseStore<T> {
   private state$: BehaviorSubject<T>;
-  private changes$ = new Subject<Change<T>>();
-  public reducers: Map<string, Reducer<T>> = new Map();
-  public changes: any[] = [];
+  public changes$ = new Subject<Change<T>>();
+  public actions$ = new Subject<Action>();
+  public reducer!: Reducer<T>;
 
   constructor(initialState: T) {
     const nextState = this.clone(initialState);
@@ -21,19 +21,12 @@ export class BaseStore<T> {
     return this.clone(currentState);
   }
 
-  public set(newState: T) {
-    const nextState = this.clone(newState);
-    this.state$.next(nextState);
-  }
-
   public dispatch(action: Action) {
-    const reducer = this.reducers.get(action.type);
-    if (reducer == null) throw Error('No reducer found for action type ' + action.type);
+    this.actions$.next(action);
     const current = this.get();
-    const next = reducer(current, action.payload);
-    this.set(next);
+    const next = this.reducer(current, action);
+    this.state$.next(next);
     const change = { action, current, next };
-    this.changes.push(change);
     this.changes$.next(change);
   }
 
@@ -46,14 +39,19 @@ export class BaseStore<T> {
     return this.get$().pipe(map(selector), distinctUntilChanged());
   }
 
-  public filter$<K>(actionType: string): Observable<Change<T>> {
-    return this.changes$.asObservable().pipe(filter((change) => change.action.type === actionType));
+  public actionFiltered$<K>(actionType: string): Observable<Action> {
+    return this.actions$.asObservable().pipe(filter((action) => action.type === actionType));
   }
 
   private clone(source: any) {
     return JSON.parse(JSON.stringify(source));
   }
 }
+
+// public reducers: Map<string, Reducer<T>> = new Map();
+// const reducer = this.reducers.get(action.type);
+// if (reducer == null) throw Error('No reducer found for action type ' + action.type);
+// next = reducer(current, action.payload);
 
 // type Cuenta = { propietario: string[]; saldo: number };
 
