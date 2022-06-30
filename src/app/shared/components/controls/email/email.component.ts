@@ -14,7 +14,11 @@ import {
   templateUrl: './email.component.html',
   styles: [],
   providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => EmailComponent), multi: true },
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => EmailComponent),
+      multi: true,
+    },
   ],
 })
 export class EmailComponent implements OnInit, ControlValueAccessor {

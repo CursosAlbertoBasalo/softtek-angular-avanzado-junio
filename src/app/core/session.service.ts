@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Action, BaseStore } from './base.store';
-import { LoggerBaseService } from './logger-base.service';
+import { LoggerService } from './logger.service';
 
 export type Session = {
   isValidating: boolean;
@@ -20,7 +20,7 @@ export class SessionFacade {
   };
   private store$ = new BaseStore<Session>(this.initialState);
 
-  constructor(private logger: LoggerBaseService) {
+  constructor(private logger: LoggerService) {
     this.store$.reducer = this.reducer;
     this.logger.warn('Starting store');
   }

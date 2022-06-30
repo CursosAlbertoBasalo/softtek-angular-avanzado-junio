@@ -1,10 +1,18 @@
-import { Injectable } from '@angular/core';
-import { LoggerBaseService } from './logger-base.service';
+import { Inject, Injectable, InjectionToken } from '@angular/core';
+
+export const ONLY_ERRORS = new InjectionToken<boolean>('onlyErrors');
+export const APP_VERSION = new InjectionToken<string>('appVersion');
 
 @Injectable()
-export class LoggerService extends LoggerBaseService {
-  constructor() {
-    super();
+export class LoggerService {
+  // private onlyErrors = false;
+  // private appVersion = '1.0.0';
+
+  constructor(
+    @Inject(ONLY_ERRORS) private onlyErrors: boolean,
+    @Inject(APP_VERSION) private appVersion: string
+  ) {
+    //super();
   }
 
   public log(message: string) {
