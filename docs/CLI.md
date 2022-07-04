@@ -102,6 +102,7 @@ ng g m auth/register --route="register" --module="app"
 # 6️⃣ - PWA
 ################################################################################
 
-
+ng add @angular/pwa@13.3.8
+npm i --force
 
 ```

@@ -14,7 +14,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint --fix",
-    "api": "json-server-auth ./database/db.json -r ./database/routes.json"
+    "api": "json-server-auth ./database/db.json -r ./database/routes.json",
+    "pwa": "npm run build && npx http-server -p 80847 -c-1 dist/softtek-angular-avanzado-abril"
   },
   "private": true,
   "dependencies": {
