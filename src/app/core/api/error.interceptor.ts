@@ -19,7 +19,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     // ToDo: security interceptor
-    request.headers.append('Authorization', 'Bearer ');
+    // request.headers.append('Authorization', 'Bearer ');
     return next.handle(request).pipe(catchError((error) => this.processError(error)));
   }
 

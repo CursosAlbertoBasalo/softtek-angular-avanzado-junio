@@ -6,6 +6,7 @@ import { LoggerService } from './logger.service';
 export type Session = {
   isValidating: boolean;
   isAuthenticated: boolean;
+  access_token: string;
   user: { email: string; password: string; roles: string[] };
 };
 
@@ -16,6 +17,7 @@ export class SessionFacade {
   private initialState: Session = {
     isValidating: false,
     isAuthenticated: false,
+    access_token: '',
     user: { email: '', password: '', roles: [] },
   };
   private store$ = new BaseStore<Session>(this.initialState);
@@ -31,8 +33,8 @@ export class SessionFacade {
     this.logger.log('Starting store');
   }
 
-  public logInUser(email: string) {
-    const action: Action = { type: 'LOG_IN', payload: email };
+  public logInUser(payload: { email: string; access_token: string }) {
+    const action: Action = { type: 'LOG_IN', payload };
     this.store$.dispatch(action);
   }
 
@@ -62,6 +64,10 @@ export class SessionFacade {
     return this.store$.get$();
   }
 
+  public getAccessToken(): string {
+    return this.store$.get().access_token;
+  }
+
   public getValidatingCommand$(): Observable<Action> {
     return this.store$.actionFiltered$('VALIDATING');
   }
@@ -71,18 +77,21 @@ export class SessionFacade {
     switch (action.type) {
       case 'VALIDATING':
         next.isValidating = true;
+        next.access_token = '';
         next.user.email = action.payload.email;
         next.user.password = action.payload.password;
         break;
       case 'LOG_IN':
         next.isValidating = false;
         next.isAuthenticated = true;
-        next.user.email = action.payload;
+        next.access_token = action.payload.access_token;
+        next.user.email = action.payload.email;
         next.user.password = '';
         break;
       case 'LOG_OUT':
         next.isValidating = false;
         next.isAuthenticated = false;
+        next.access_token = '';
         next.user.password = '';
         break;
       case 'ADD_ROLE':

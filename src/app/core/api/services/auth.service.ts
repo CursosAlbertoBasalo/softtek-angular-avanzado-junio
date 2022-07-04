@@ -12,10 +12,11 @@ export class AuthService {
     });
   }
 
-  private validatingEffect(payload: any) {
-    this.http.post('', payload).subscribe(
-      () => this.sessionService.logInUser(payload.email),
-      () => this.sessionService.logOutUser()
+  private validatingEffect(credentials: any) {
+    this.http.post<string>('', credentials).subscribe(
+      (access_token: string) =>
+        this.sessionService.logInUser({ email: credentials.email, access_token }),
+      (error: any) => this.sessionService.logOutUser()
     );
   }
 }
