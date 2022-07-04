@@ -6,8 +6,8 @@ import { SessionFacade } from '../../session.service';
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient, private sessionService: SessionFacade) {
-    this.sessionService.getValidatingCommand$().subscribe((action) => {
+  constructor(private sessionFacade: SessionFacade, private http: HttpClient) {
+    this.sessionFacade.getValidatingCommand$().subscribe((action) => {
       this.validatingEffect(action.payload);
     });
   }
@@ -15,8 +15,8 @@ export class AuthService {
   private validatingEffect(credentials: any) {
     this.http.post<string>('', credentials).subscribe(
       (access_token: string) =>
-        this.sessionService.logInUser({ email: credentials.email, access_token }),
-      (error: any) => this.sessionService.logOutUser()
+        this.sessionFacade.logInUser({ email: credentials.email, access_token }),
+      (error: any) => this.sessionFacade.logOutUser()
     );
   }
 }
