@@ -1,3 +1,8 @@
 <stk-header></stk-header>
 <router-outlet></router-outlet>
 <stk-footer></stk-footer>
+<h5> 🚀 Version control with interval OK OK OK </h5>
+<section *ngIf="newVersion!= ''">
+  <h4>{{ newVersion }}</h4>
+  <button (click)="onReload()"> ♻️ RELOAD </button>
+</section>
