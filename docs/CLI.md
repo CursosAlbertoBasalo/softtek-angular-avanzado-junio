@@ -110,7 +110,7 @@ npm i --force
 # 7️⃣ - SSR
 ################################################################################
 
-ng add @angular/express-engine@13.1.1
+ng add @nguniversal/express-engine@13.1.1
 npm i --force
 
 ```
