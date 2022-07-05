@@ -105,4 +105,12 @@ ng g m auth/register --route="register" --module="app"
 ng add @angular/pwa@13.3.8
 npm i --force
 
+
+################################################################################
+# 7️⃣ - SSR
+################################################################################
+
+ng add @angular/express-engine@13.3.8
+npm i --force
+
 ```
