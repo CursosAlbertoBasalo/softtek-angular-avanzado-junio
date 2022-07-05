@@ -2,8 +2,8 @@
   "$schema": "./node_modules/@angular/service-worker/config/schema.json",
   "index": "/index.html",
   "appData": {
-    "version": "14:30",
-    "description": "feat: 🚀 OK"
+    "version": "14:44",
+    "description": "feat: 🌅 cache"
   },
   "assetGroups": [
     {
@@ -29,6 +29,43 @@
           "/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
         ]
       }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "stable-cache-first-1d",
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxAge": "1d",
+        "maxSize": 10
+      },
+      "urls": [
+        "http://localhost:3000/agencies"
+      ]
+    },
+    {
+      "name": "dynamic-network-first",
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxAge": "1h",
+        "maxSize": 10,
+        "timeout": "10s"
+      },
+      "urls": [
+        "http://localhost:3000/trips"
+      ]
+    },
+    {
+      "name": "stale-network-first",
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxAge": "1h",
+        "maxSize": 10,
+        "timeout": "0u"
+      },
+      "urls": [
+        "http://localhost:3000/bookings"
+      ]
     }
   ]
 }
