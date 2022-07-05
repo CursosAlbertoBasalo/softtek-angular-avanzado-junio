@@ -15,7 +15,11 @@
     "test": "ng test",
     "lint": "ng lint --fix",
     "api": "json-server-auth ./database/db.json -r ./database/routes.json",
-    "pwa": "npm run build && npx http-server -p 8083 -c-1 dist/softtek-angular-avanzado-abril"
+    "pwa": "npm run build && npx http-server -p 8083 -c-1 dist/softtek-angular-avanzado-abril",
+    "dev:ssr": "ng run softtek-angular-avanzado-abril:serve-ssr",
+    "serve:ssr": "node dist/softtek-angular-avanzado-abril/server/main.js",
+    "build:ssr": "ng build && ng run softtek-angular-avanzado-abril:server",
+    "prerender": "ng run softtek-angular-avanzado-abril:prerender"
   },
   "private": true,
   "dependencies": {
@@ -26,9 +30,12 @@
     "@angular/forms": "~13.3.0",
     "@angular/platform-browser": "~13.3.0",
     "@angular/platform-browser-dynamic": "~13.3.0",
+    "@angular/platform-server": "~13.3.0",
     "@angular/router": "~13.3.0",
     "@angular/service-worker": "~13.3.0",
+    "@nguniversal/express-engine": "^13.1.1",
     "@picocss/pico": "^1.5.2",
+    "express": "^4.15.2",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
@@ -37,6 +44,8 @@
     "@angular-devkit/build-angular": "~13.3.6",
     "@angular/cli": "~13.3.6",
     "@angular/compiler-cli": "~13.3.0",
+    "@nguniversal/builders": "^13.1.1",
+    "@types/express": "^4.17.0",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
     "jasmine-core": "~4.0.0",
