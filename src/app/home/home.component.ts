@@ -17,10 +17,10 @@ export class HomeComponent {
   public trips$: Observable<Response<Trip[]>>;
 
   constructor(private service: HomeService, title: Title, meta: Meta) {
-    title.setTitle('Welcome Softtek');
     // meta.updateTag({ name: 'description', content: 'Sample app for softtek' });
     this.agencies$ = this.service.getAgencies$().pipe(
       tap((response) => {
+        title.setTitle('🚀 Showing Agencies ' + response.data?.length);
         meta.updateTag({
           name: 'description',
           content: 'Showing Agencies ' + response.data?.length,
