@@ -113,4 +113,23 @@ npm i --force
 ng add @nguniversal/express-engine@13.1.1
 npm i --force
 
+
+################################################################################
+# 8️⃣ - Libs
+################################################################################
+
+npx ng new softtek-junio --create-application=false
+ng g application www --routing=true --style=css --minimal=true
+ng g library ui
+ng g application admin --routing=true --style=css --minimal=true
+ng g library auth
+npm start
+npm run start:www
+npm run start:admin
+
+npm run build:www
+npm run build:ui
+
+npm run build:admin
+npm run build:auth
 ```
